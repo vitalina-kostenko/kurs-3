@@ -7,7 +7,9 @@ import { requireAuth, requireRole } from "@/app/shared/lib/auth-guard";
 
 export async function GET() {
   const { error } = await requireAuth();
+  
   if (error) return error;
+  
   try {
     const all = await db.select().from(specialists).orderBy(specialists.createdAt);
     return jsonOk(all);
@@ -18,7 +20,9 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const { error } = await requireRole("admin");
+ 
   if (error) return error;
+  
   try {
     const body = await req.json();
     const [created] = await db.insert(specialists).values(body).returning();
@@ -30,7 +34,9 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const { error } = await requireRole("admin");
+  
   if (error) return error;
+ 
   try {
     const body = await req.json();
     const { id, ...data } = body;
@@ -43,7 +49,9 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const { error } = await requireRole("admin");
+ 
   if (error) return error;
+  
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");

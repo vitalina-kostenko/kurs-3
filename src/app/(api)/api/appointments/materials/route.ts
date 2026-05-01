@@ -7,10 +7,13 @@ import { requireAuth } from "@/app/shared/lib/auth-guard";
 
 export async function GET(req: NextRequest) {
   const { error: authErr } = await requireAuth();
+
   if (authErr) return authErr;
+
   try {
     const { searchParams } = new URL(req.url);
     const appointmentId = searchParams.get("appointmentId");
+
     if (!appointmentId) return jsonError("appointmentId is required");
 
     const items = await db
@@ -35,7 +38,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const { error: authErr } = await requireAuth();
+  
   if (authErr) return authErr;
+
   try {
     const body = await req.json();
     const { appointmentId, materialIds } = body as {

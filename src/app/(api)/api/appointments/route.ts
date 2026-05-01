@@ -7,6 +7,7 @@ import { NextRequest } from "next/server";
 
 function timeToMin(t: string): number {
   const [h, m] = t.split(":").map(Number);
+
   return h * 60 + m;
 }
 
@@ -26,6 +27,7 @@ async function validateAppointment(body: {
   excludeId?: string;
 }) {
   const newStart = timeToMin(body.startTime);
+
   const newEnd = timeToMin(body.endTime);
 
   if (newEnd <= newStart) {
@@ -104,7 +106,9 @@ async function validateAppointment(body: {
 
 export async function GET() {
   const { error: authErr } = await requireAuth();
+
   if (authErr) return authErr;
+
   try {
     const all = await db
       .select({
@@ -141,7 +145,9 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const { error: authErr } = await requireAuth();
+
   if (authErr) return authErr;
+
   try {
     const body = await req.json();
 
@@ -161,7 +167,9 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const { error: authErr } = await requireRole("admin");
+
   if (authErr) return authErr;
+
   try {
     const body = await req.json();
     const { id, ...data } = body;
@@ -191,7 +199,9 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const { error: authErr } = await requireRole("admin");
+
   if (authErr) return authErr;
+  
   try {
     const { searchParams } = new URL(req.url);
 

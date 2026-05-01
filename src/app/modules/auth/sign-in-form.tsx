@@ -33,12 +33,9 @@ export function SignInForm() {
   const onSubmit = async (data: SignInData) => {
     setLoading(true);
     try {
-      const result = await signIn.email({
-        email: data.email,
-        password: data.password,
-      });
+      const result = await signIn(data.email, data.password);
       if (result.error) {
-        toast.error(result.error.message ?? "Sign in failed");
+        toast.error(result.error.error ?? "Sign in failed");
       } else {
         router.push("/dashboard");
       }

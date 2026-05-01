@@ -6,20 +6,25 @@ import { requireAuth } from "@/app/shared/lib/auth-guard";
 
 export async function GET() {
   const { error } = await requireAuth();
+ 
   if (error) return error;
+ 
   try {
     const today = new Date().toISOString().split("T")[0];
 
     const [totalClients] = await db.select({ value: count() }).from(clients);
+   
     const [activeSpecialists] = await db
       .select({ value: count() })
       .from(specialists)
       .where(eq(specialists.isActive, true));
-    const [todayAppointments] = await db
+   
+      const [todayAppointments] = await db
       .select({ value: count() })
       .from(appointments)
       .where(eq(appointments.appointmentDate, today));
-    const [monthlyRevenue] = await db
+   
+      const [monthlyRevenue] = await db
       .select({
         value: sql<string>`COALESCE(SUM(${services.price}::numeric), 0)`,
       })

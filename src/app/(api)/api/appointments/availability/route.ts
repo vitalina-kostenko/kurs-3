@@ -7,6 +7,7 @@ import { NextRequest } from "next/server";
 
 function timeToMin(t: string): number {
   const [h, m] = t.split(":").map(Number);
+
   return h * 60 + m;
 }
 
@@ -16,7 +17,9 @@ function minToTime(m: number): string {
 
 export async function GET(req: NextRequest) {
   const { error: authErr } = await requireAuth();
+
   if (authErr) return authErr;
+  
   try {
     const { searchParams } = new URL(req.url);
     const specialistId = searchParams.get("specialistId");
