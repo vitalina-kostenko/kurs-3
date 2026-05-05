@@ -48,16 +48,24 @@ export function SpecialistsTable({
               <TableHead>
                 {t("firstName")} / {t("lastName")}
               </TableHead>
+
               <TableHead>{t("specialization")}</TableHead>
+
               <TableHead>{t("phone")}</TableHead>
+
               <TableHead>
                 {t("workStart")} - {t("workEnd")}
               </TableHead>
+
               <TableHead>
                 {t("breakStart")} - {t("breakEnd")}
               </TableHead>
+
               <TableHead>{tc("status")}</TableHead>
-              {isAdmin && <TableHead className="w-24">{tc("actions")}</TableHead>}
+
+              {isAdmin && (
+                <TableHead className="w-24">{tc("actions")}</TableHead>
+              )}
             </TableRow>
           </TableHeader>
 
@@ -65,6 +73,7 @@ export function SpecialistsTable({
             <AnimatePresence mode="popLayout">
               {items.map((item) => {
                 const isItemDeleting = deletingId === item.id;
+
                 return (
                   <motion.tr
                     key={item.id}
@@ -81,19 +90,25 @@ export function SpecialistsTable({
                     <TableCell className="font-medium">
                       {item.firstName} {item.lastName}
                     </TableCell>
+
                     <TableCell>{item.specialization || "—"}</TableCell>
+
                     <TableCell>{item.phone || "—"}</TableCell>
+
                     <TableCell>
                       {item.workStartTime} - {item.workEndTime}
                     </TableCell>
+
                     <TableCell>
                       {item.breakStartTime} - {item.breakEndTime}
                     </TableCell>
+
                     <TableCell>
                       <Badge variant={item.isActive ? "success" : "secondary"}>
                         {item.isActive ? tc("active") : tc("inactive")}
                       </Badge>
                     </TableCell>
+
                     {isAdmin && (
                       <TableCell>
                         <div className="flex gap-1">
@@ -128,7 +143,10 @@ export function SpecialistsTable({
 
             {items.length === 0 && (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                <TableCell
+                  colSpan={7}
+                  className="text-center py-8 text-muted-foreground"
+                >
                   {tc("noData")}
                 </TableCell>
               </TableRow>

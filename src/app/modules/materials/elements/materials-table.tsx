@@ -53,7 +53,9 @@ export function MaterialsTable({
               <TableHead>{t("minQuantity")}</TableHead>
               <TableHead>{t("pricePerUnit")}</TableHead>
               <TableHead>{tc("status")}</TableHead>
-              {isAdmin && <TableHead className="w-24">{tc("actions")}</TableHead>}
+              {isAdmin && (
+                <TableHead className="w-24">{tc("actions")}</TableHead>
+              )}
             </TableRow>
           </TableHeader>
 
@@ -85,7 +87,7 @@ export function MaterialsTable({
                         )}
                       </div>
                     </TableCell>
-                    
+
                     <TableCell>{item.unit}</TableCell>
                     <TableCell>{item.quantity}</TableCell>
                     <TableCell>{item.minQuantity}</TableCell>
@@ -135,7 +137,10 @@ export function MaterialsTable({
 
             {items.length === 0 && (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                <TableCell
+                  colSpan={7}
+                  className="text-center py-8 text-muted-foreground"
+                >
                   {tc("noData")}
                 </TableCell>
               </TableRow>

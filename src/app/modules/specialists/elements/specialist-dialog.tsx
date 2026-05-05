@@ -47,7 +47,9 @@ export function SpecialistDialog({
           text={editing ? "Updating..." : "Creating..."}
         />
         <DialogHeader>
-          <DialogTitle>{editing ? t("editSpecialist") : t("addSpecialist")}</DialogTitle>
+          <DialogTitle>
+            {editing ? t("editSpecialist") : t("addSpecialist")}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -67,7 +69,11 @@ export function SpecialistDialog({
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>{t("email")}</Label>
-              <Input type="email" {...form.register("email")} disabled={isSaving} />
+              <Input
+                type="email"
+                {...form.register("email")}
+                disabled={isSaving}
+              />
             </div>
             <div className="space-y-2">
               <Label>{t("phone")}</Label>
@@ -85,7 +91,11 @@ export function SpecialistDialog({
             </div>
             <div className="space-y-2">
               <Label>{t("workEnd")}</Label>
-              <Input type="time" {...form.register("workEndTime")} disabled={isSaving} />
+              <Input
+                type="time"
+                {...form.register("workEndTime")}
+                disabled={isSaving}
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -99,7 +109,11 @@ export function SpecialistDialog({
             </div>
             <div className="space-y-2">
               <Label>{t("breakEnd")}</Label>
-              <Input type="time" {...form.register("breakEndTime")} disabled={isSaving} />
+              <Input
+                type="time"
+                {...form.register("breakEndTime")}
+                disabled={isSaving}
+              />
             </div>
           </div>
           <DialogFooter>

@@ -49,13 +49,15 @@ export function CabinetDialog({
         />
 
         <DialogHeader>
-          <DialogTitle>{editing ? t("editCabinet") : t("addCabinet")}</DialogTitle>
+          <DialogTitle>
+            {editing ? t("editCabinet") : t("addCabinet")}
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label>{t("name")}</Label>
-            
+
             <Input {...form.register("name")} disabled={isSaving} />
           </div>
 

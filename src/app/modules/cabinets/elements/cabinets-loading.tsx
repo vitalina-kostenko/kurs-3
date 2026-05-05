@@ -10,10 +10,9 @@ export function CabinetsLoading() {
       animate={{ opacity: 1 }}
       className="space-y-4"
     >
-
       <div className="flex justify-between items-center">
         <div className="h-5 w-32 animate-pulse rounded bg-muted" />
-        
+
         <div className="h-10 w-36 animate-pulse rounded-xl bg-muted" />
       </div>
 

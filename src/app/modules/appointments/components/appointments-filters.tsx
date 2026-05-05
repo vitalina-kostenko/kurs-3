@@ -57,7 +57,7 @@ export function AppointmentsFilters({
         <Label className="text-xs text-muted-foreground">
           {tc("filterByStatus")}
         </Label>
-       
+
         <Select value={filterStatus} onValueChange={onFilterStatusChange}>
           <SelectTrigger className="w-40 h-9">
             <SelectValue placeholder={tc("all")} />

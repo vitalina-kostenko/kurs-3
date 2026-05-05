@@ -61,7 +61,9 @@ export function ClientDialog({
           text={editing ? "Updating..." : "Creating..."}
         />
         <DialogHeader>
-          <DialogTitle>{editing ? t("editClient") : t("addClient")}</DialogTitle>
+          <DialogTitle>
+            {editing ? t("editClient") : t("addClient")}
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -81,7 +83,11 @@ export function ClientDialog({
             <div className="space-y-2">
               <Label>{t("email")}</Label>
 
-              <Input type="email" {...form.register("email")} disabled={isSaving} />
+              <Input
+                type="email"
+                {...form.register("email")}
+                disabled={isSaving}
+              />
             </div>
 
             <div className="space-y-2">
@@ -105,7 +111,9 @@ export function ClientDialog({
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem value="__none__">{t("noCabinetPreference")}</SelectItem>
+                <SelectItem value="__none__">
+                  {t("noCabinetPreference")}
+                </SelectItem>
                 {cabinetsList
                   ?.filter((c) => c.isAvailable)
                   .map((c) => (
@@ -116,7 +124,7 @@ export function ClientDialog({
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label>{t("notes")}</Label>
 

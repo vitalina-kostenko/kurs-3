@@ -53,7 +53,9 @@ export function ClientsTable({
               <TableHead>{t("phone")}</TableHead>
               <TableHead>{t("preferredCabinet")}</TableHead>
               <TableHead>{t("notes")}</TableHead>
-              {isAdmin && <TableHead className="w-24">{tc("actions")}</TableHead>}
+              {isAdmin && (
+                <TableHead className="w-24">{tc("actions")}</TableHead>
+              )}
             </TableRow>
           </TableHeader>
 
@@ -80,8 +82,12 @@ export function ClientsTable({
 
                     <TableCell>{item.email || "—"}</TableCell>
                     <TableCell>{item.phone}</TableCell>
-                    <TableCell>{getCabinetName(item.preferredCabinetId)}</TableCell>
-                    <TableCell className="max-w-48 truncate">{item.notes || "—"}</TableCell>
+                    <TableCell>
+                      {getCabinetName(item.preferredCabinetId)}
+                    </TableCell>
+                    <TableCell className="max-w-48 truncate">
+                      {item.notes || "—"}
+                    </TableCell>
 
                     {isAdmin && (
                       <TableCell>
@@ -117,7 +123,10 @@ export function ClientsTable({
 
             {items.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                <TableCell
+                  colSpan={6}
+                  className="text-center py-8 text-muted-foreground"
+                >
                   {tc("noData")}
                 </TableCell>
               </TableRow>

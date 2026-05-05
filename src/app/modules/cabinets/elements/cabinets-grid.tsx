@@ -1,13 +1,7 @@
 "use client";
 
 import { type Cabinet } from "@/app/entities/cabinet/api";
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  Spinner,
-} from "@/app/shared/ui";
+import { Badge, Button, Card, CardContent, Spinner } from "@/app/shared/ui";
 import { cn } from "@/pkg/theme/utils";
 import { DoorOpen, Pencil, Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -110,7 +104,6 @@ export function CabinetsGrid({
             </motion.div>
           );
         })}
-        
       </AnimatePresence>
       {items.length === 0 && (
         <div className="col-span-full text-center py-12 text-muted-foreground">

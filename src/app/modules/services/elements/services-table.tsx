@@ -49,7 +49,9 @@ export function ServicesTable({
               <TableHead>{t("duration")}</TableHead>
               <TableHead>{t("price")}</TableHead>
               <TableHead>{tc("status")}</TableHead>
-              {isAdmin && <TableHead className="w-24">{tc("actions")}</TableHead>}
+              {isAdmin && (
+                <TableHead className="w-24">{tc("actions")}</TableHead>
+              )}
             </TableRow>
           </TableHeader>
 
@@ -85,7 +87,9 @@ export function ServicesTable({
                     <TableCell>{service.durationMinutes} min</TableCell>
                     <TableCell>${service.price}</TableCell>
                     <TableCell>
-                      <Badge variant={service.isActive ? "success" : "secondary"}>
+                      <Badge
+                        variant={service.isActive ? "success" : "secondary"}
+                      >
                         {service.isActive ? tc("active") : tc("inactive")}
                       </Badge>
                     </TableCell>
@@ -124,7 +128,10 @@ export function ServicesTable({
 
             {items.length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell
+                  colSpan={5}
+                  className="text-center py-8 text-muted-foreground"
+                >
                   {tc("noData")}
                 </TableCell>
               </TableRow>

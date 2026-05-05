@@ -34,7 +34,9 @@ export function AvailabilityPanel({
       <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border">
         <Spinner size="sm" />
 
-        <span className="text-sm text-muted-foreground">{t("availability")}...</span>
+        <span className="text-sm text-muted-foreground">
+          {t("availability")}...
+        </span>
       </div>
     );
   }
@@ -51,7 +53,9 @@ export function AvailabilityPanel({
 
   const totalWork = availability.totalWorkMinutes;
   const percentBooked =
-    totalWork > 0 ? Math.round((availability.totalBookedMinutes / totalWork) * 100) : 0;
+    totalWork > 0
+      ? Math.round((availability.totalBookedMinutes / totalWork) * 100)
+      : 0;
   const isFull = availability.isFull;
   const isAlmostFull = availability.freeMinutes <= 60 && !isFull;
 
@@ -59,7 +63,8 @@ export function AvailabilityPanel({
     <div
       className={cn(
         "rounded-lg border p-3 space-y-2 transition-colors",
-        isFull && "bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800/40",
+        isFull &&
+          "bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800/40",
         isAlmostFull &&
           "bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800/40",
         !isFull && !isAlmostFull && "bg-muted/30 border-border",
@@ -78,8 +83,8 @@ export function AvailabilityPanel({
         </div>
 
         <span className="text-xs text-muted-foreground">
-          {t("workingHours")}: {availability.workStart}–{availability.workEnd} (break:{" "}
-          {availability.breakStart}–{availability.breakEnd})
+          {t("workingHours")}: {availability.workStart}–{availability.workEnd}{" "}
+          (break: {availability.breakStart}–{availability.breakEnd})
         </span>
       </div>
 
@@ -94,28 +99,38 @@ export function AvailabilityPanel({
           <div
             className={cn(
               "h-full rounded-full transition-all",
-              isFull ? "bg-red-500" : isAlmostFull ? "bg-amber-500" : "bg-primary",
+              isFull
+                ? "bg-red-500"
+                : isAlmostFull
+                  ? "bg-amber-500"
+                  : "bg-primary",
             )}
             style={{ width: `${Math.min(percentBooked, 100)}%` }}
           />
         </div>
 
         <span className="text-xs font-mono whitespace-nowrap">
-          {formatMinutes(availability.totalBookedMinutes)} / {formatMinutes(totalWork)}
+          {formatMinutes(availability.totalBookedMinutes)} /{" "}
+          {formatMinutes(totalWork)}
         </span>
       </div>
 
       <div className="flex gap-4 text-xs">
         <span>
           <span className="text-muted-foreground">{t("bookedMinutes")}:</span>{" "}
-          
-          <span className="font-medium">{formatMinutes(availability.totalBookedMinutes)}</span>{" "}
+          <span className="font-medium">
+            {formatMinutes(availability.totalBookedMinutes)}
+          </span>{" "}
           ({availability.appointmentCount} {t("appointments")})
         </span>
         <span>
           <span className="text-muted-foreground">{t("freeMinutes")}:</span>{" "}
-          
-          <span className={cn("font-medium", isFull && "text-red-600 dark:text-red-400")}>
+          <span
+            className={cn(
+              "font-medium",
+              isFull && "text-red-600 dark:text-red-400",
+            )}
+          >
             {formatMinutes(availability.freeMinutes)}
           </span>
         </span>
@@ -123,8 +138,10 @@ export function AvailabilityPanel({
 
       {availability.busySlots.length > 0 && (
         <div className="space-y-1">
-          <p className="text-xs text-muted-foreground font-medium">{t("busySlots")}:</p>
-         
+          <p className="text-xs text-muted-foreground font-medium">
+            {t("busySlots")}:
+          </p>
+
           <div className="flex flex-wrap gap-1">
             {availability.busySlots.map((slot, i) => (
               <span
@@ -132,7 +149,9 @@ export function AvailabilityPanel({
                 className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-md bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
               >
                 {slot.start}–{slot.end}
-                {slot.service && <span className="opacity-70">({slot.service})</span>}
+                {slot.service && (
+                  <span className="opacity-70">({slot.service})</span>
+                )}
               </span>
             ))}
           </div>
@@ -141,9 +160,10 @@ export function AvailabilityPanel({
 
       {availability.freeSlots.length > 0 && !isFull && (
         <div className="space-y-1">
-         
-          <p className="text-xs text-muted-foreground font-medium">{t("freeSlots")}:</p>
-          
+          <p className="text-xs text-muted-foreground font-medium">
+            {t("freeSlots")}:
+          </p>
+
           <div className="flex flex-wrap gap-1">
             {availability.freeSlots.map((slot, i) => (
               <span

@@ -108,7 +108,7 @@ export function AppointmentsModule() {
 
     if (filterSpecialist)
       result = result.filter((a) => a.specialistId === filterSpecialist);
-    
+
     return result;
   }, [data, filterDate, filterStatus, filterSpecialist]);
 
@@ -218,7 +218,7 @@ export function AppointmentsModule() {
         status: item.status,
         notes: item.notes ?? "",
       });
-      
+
       try {
         const mats = await appointmentApi.getMaterials(item.id);
         setSelectedMaterials(
@@ -445,14 +445,13 @@ export function AppointmentsModule() {
             const cabinet = cabinetsList?.find(
               (c) => c.id === client.preferredCabinetId && c.isAvailable,
             );
-            
+
             if (cabinet) {
               form.setValue("cabinetId", cabinet.id);
             }
           }
         }}
         onSpecialistChange={(v) => form.setValue("specialistId", v)}
-
         onServiceChange={(v) => {
           form.setValue("serviceId", v);
 
@@ -473,9 +472,7 @@ export function AppointmentsModule() {
             form.setValue("endTime", `${endH}:${endM}`);
           }
         }}
-
         onCabinetChange={(v) => form.setValue("cabinetId", v)}
-
         onStartTimeChange={(value) => {
           form.setValue("startTime", value);
           const svc = servicesList?.find(

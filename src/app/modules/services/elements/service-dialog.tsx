@@ -48,7 +48,9 @@ export function ServiceDialog({
           text={editing ? "Updating..." : "Creating..."}
         />
         <DialogHeader>
-          <DialogTitle>{editing ? t("editService") : t("addService")}</DialogTitle>
+          <DialogTitle>
+            {editing ? t("editService") : t("addService")}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">

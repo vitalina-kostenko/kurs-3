@@ -13,6 +13,7 @@ const schema = z.object({
 
 export async function POST(req: NextRequest) {
   const parsed = schema.safeParse(await req.json());
+
   if (!parsed.success) {
     return NextResponse.json({ error: "Validation failed" }, { status: 400 });
   }
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     const valid = await compare(password, found.passwordHash);
+    
     if (!valid) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }

@@ -7,11 +7,7 @@ import {
 } from "@/app/entities/cabinet/schema";
 import { useCrud } from "@/app/shared/hooks/use-crud";
 import { useRole } from "@/app/shared/hooks/use-role";
-import {
-  Button,
-  ConfirmDialog,
-  Spinner,
-} from "@/app/shared/ui";
+import { Button, ConfirmDialog, Spinner } from "@/app/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { motion } from "motion/react";
@@ -110,7 +106,7 @@ export function CabinetsModule() {
             <Spinner size="sm" className="text-muted-foreground" />
           )}
         </div>
-        
+
         {isAdmin && (
           <Button onClick={() => onOpen()} className="gap-2">
             <Plus className="h-4 w-4" /> {t("addCabinet")}

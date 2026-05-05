@@ -138,7 +138,7 @@ export function ServicesModule() {
             <Spinner size="sm" className="text-muted-foreground" />
           )}
         </div>
-        
+
         {isAdmin && (
           <Button onClick={() => onOpen()} className="gap-2">
             <Plus className="h-4 w-4" /> {t("addService")}
