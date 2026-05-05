@@ -48,8 +48,10 @@ export function StatsCards({
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+
                   <p className="text-2xl font-bold mt-1">{stat.value}</p>
                 </div>
+                
                 <div className="rounded-xl bg-white/60 dark:bg-white/10 p-3">
                   <stat.icon className="h-6 w-6 text-primary" />
                 </div>

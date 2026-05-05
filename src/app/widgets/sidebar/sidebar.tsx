@@ -48,6 +48,7 @@ export function Sidebar() {
           height={36}
           className="rounded-xl"
         />
+        
         <span className="text-lg font-semibold tracking-tight">Massage Center</span>
       </div>
 

@@ -16,7 +16,10 @@ export interface Client {
 
 export const clientApi = {
   getAll: () => api.get("clients").json<Client[]>(),
+
   create: (data: Record<string, unknown>) => api.post("clients", { json: data }).json<Client>(),
+
   update: (data: Record<string, unknown>) => api.put("clients", { json: data }).json<Client>(),
+  
   delete: (id: string) => api.delete("clients", { searchParams: { id } }).json(),
 };

@@ -14,7 +14,10 @@ export interface Cabinet {
 
 export const cabinetApi = {
   getAll: () => api.get("cabinets").json<Cabinet[]>(),
+
   create: (data: Record<string, unknown>) => api.post("cabinets", { json: data }).json<Cabinet>(),
+
   update: (data: Record<string, unknown>) => api.put("cabinets", { json: data }).json<Cabinet>(),
+  
   delete: (id: string) => api.delete("cabinets", { searchParams: { id } }).json(),
 };

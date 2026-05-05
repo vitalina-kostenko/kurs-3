@@ -1,11 +1,19 @@
 "use client";
 
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  DashboardSkeleton,
+  Spinner,
+} from "@/app/shared/ui";
+import { StatsCards } from "@/app/widgets/stats-cards/stats-cards";
 import { useQuery } from "@tanstack/react-query";
 import ky from "ky";
-import { useTranslations } from "next-intl";
-import { StatsCards } from "@/app/widgets/stats-cards/stats-cards";
-import { Card, CardContent, CardHeader, CardTitle, Badge, DashboardSkeleton, Spinner } from "@/app/shared/ui";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 interface DashboardData {
   totalClients: number;
@@ -25,7 +33,10 @@ interface DashboardData {
   }[];
 }
 
-const statusVariant: Record<string, "default" | "secondary" | "success" | "destructive" | "warning"> = {
+const statusVariant: Record<
+  string,
+  "default" | "secondary" | "success" | "destructive" | "warning"
+> = {
   scheduled: "secondary",
   in_progress: "warning",
   completed: "success",
@@ -67,9 +78,12 @@ export function DashboardModule() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <CardTitle>{t("recentAppointments")}</CardTitle>
-              {isFetching && <Spinner size="sm" className="text-muted-foreground" />}
+              {isFetching && (
+                <Spinner size="sm" className="text-muted-foreground" />
+              )}
             </div>
           </CardHeader>
+
           <CardContent>
             {data.recentAppointments.length === 0 ? (
               <p className="text-muted-foreground text-sm text-center py-8">
@@ -89,17 +103,27 @@ export function DashboardModule() {
                       <p className="text-sm font-medium">
                         {apt.clientFirstName} {apt.clientLastName}
                       </p>
+
                       <p className="text-xs text-muted-foreground">
-                        {apt.serviceName} — {apt.specialistFirstName} {apt.specialistLastName}
+                        {apt.serviceName} — {apt.specialistFirstName}{" "}
+                        {apt.specialistLastName}
                       </p>
                     </div>
+
                     <div className="flex items-center gap-3">
                       <div className="text-right">
                         <p className="text-sm">{apt.appointmentDate}</p>
-                        <p className="text-xs text-muted-foreground">{apt.startTime}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {apt.startTime}
+                        </p>
                       </div>
+
                       <Badge variant={statusVariant[apt.status] ?? "default"}>
-                        {tApp(apt.status === "in_progress" ? "inProgress" : apt.status)}
+                        {tApp(
+                          apt.status === "in_progress"
+                            ? "inProgress"
+                            : apt.status,
+                        )}
                       </Badge>
                     </div>
                   </motion.div>

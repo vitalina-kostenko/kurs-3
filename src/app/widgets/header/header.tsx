@@ -18,6 +18,7 @@ export function Header() {
 
   const handleSignOut = async () => {
     await signOut();
+
     router.push("/auth/sign-in");
   };
 
@@ -25,6 +26,7 @@ export function Header() {
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background/80 backdrop-blur-md px-6">
       <h1 className="text-xl font-semibold">{pageTitle}</h1>
       <div className="flex items-center gap-3">
+
         {session?.user && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <User className="h-4 w-4" />
@@ -35,6 +37,7 @@ export function Header() {
             </Badge>
           </div>
         )}
+
         <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-1.5">
           <LogOut className="h-4 w-4" />
           {t("signOut")}
@@ -52,5 +55,6 @@ function getPageTitle(pathname: string, t: (key: string) => string): string {
   if (pathname.includes("/clients")) return t("clients");
   if (pathname.includes("/appointments")) return t("appointments");
   if (pathname.includes("/materials")) return t("materials");
+  
   return t("dashboard");
 }

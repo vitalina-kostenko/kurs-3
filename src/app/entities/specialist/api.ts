@@ -20,7 +20,10 @@ export interface Specialist {
 
 export const specialistApi = {
   getAll: () => api.get("specialists").json<Specialist[]>(),
+
   create: (data: Record<string, unknown>) => api.post("specialists", { json: data }).json<Specialist>(),
+
   update: (data: Record<string, unknown>) => api.put("specialists", { json: data }).json<Specialist>(),
+  
   delete: (id: string) => api.delete("specialists", { searchParams: { id } }).json(),
 };

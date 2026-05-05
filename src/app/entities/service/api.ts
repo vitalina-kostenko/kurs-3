@@ -15,7 +15,10 @@ export interface Service {
 
 export const serviceApi = {
   getAll: () => api.get("services").json<Service[]>(),
+
   create: (data: Record<string, unknown>) => api.post("services", { json: data }).json<Service>(),
+
   update: (data: Record<string, unknown>) => api.put("services", { json: data }).json<Service>(),
+  
   delete: (id: string) => api.delete("services", { searchParams: { id } }).json(),
 };

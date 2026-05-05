@@ -16,7 +16,10 @@ export interface Material {
 
 export const materialApi = {
   getAll: () => api.get("materials").json<Material[]>(),
+
   create: (data: Record<string, unknown>) => api.post("materials", { json: data }).json<Material>(),
+
   update: (data: Record<string, unknown>) => api.put("materials", { json: data }).json<Material>(),
+  
   delete: (id: string) => api.delete("materials", { searchParams: { id } }).json(),
 };

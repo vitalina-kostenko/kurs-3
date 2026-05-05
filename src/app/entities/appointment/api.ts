@@ -50,17 +50,36 @@ export interface AppointmentMaterial {
 
 export const appointmentApi = {
   getAll: () => api.get("appointments").json<Appointment[]>(),
-  create: (data: Record<string, unknown>) => api.post("appointments", { json: data }).json<Appointment>(),
-  update: (data: Record<string, unknown>) => api.put("appointments", { json: data }).json<Appointment>(),
-  delete: (id: string) => api.delete("appointments", { searchParams: { id } }).json(),
+  create: (data: Record<string, unknown>) =>
+    api.post("appointments", { json: data }).json<Appointment>(),
+
+  update: (data: Record<string, unknown>) =>
+    api.put("appointments", { json: data }).json<Appointment>(),
+
+  delete: (id: string) =>
+    api.delete("appointments", { searchParams: { id } }).json(),
+
   getAvailability: (specialistId: string, date: string, excludeId?: string) =>
     api
       .get("appointments/availability", {
-        searchParams: { specialistId, date, ...(excludeId ? { excludeId } : {}) },
+        searchParams: {
+          specialistId,
+          date,
+          ...(excludeId ? { excludeId } : {}),
+        },
       })
       .json<SpecialistAvailability>(),
+
   getMaterials: (appointmentId: string) =>
-    api.get("appointments/materials", { searchParams: { appointmentId } }).json<AppointmentMaterial[]>(),
-  saveMaterials: (appointmentId: string, materialIds: { materialId: string; quantity: string }[]) =>
-    api.post("appointments/materials", { json: { appointmentId, materialIds } }).json<AppointmentMaterial[]>(),
+    api
+      .get("appointments/materials", { searchParams: { appointmentId } })
+      .json<AppointmentMaterial[]>(),
+
+  saveMaterials: (
+    appointmentId: string,
+    materialIds: { materialId: string; quantity: string }[],
+  ) =>
+    api
+      .post("appointments/materials", { json: { appointmentId, materialIds } })
+      .json<AppointmentMaterial[]>(),
 };
