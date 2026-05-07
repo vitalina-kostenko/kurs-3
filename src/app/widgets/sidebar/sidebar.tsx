@@ -20,15 +20,16 @@ import { Button } from "@/app/shared/ui";
 import { motion } from "motion/react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import { useSession } from "@/pkg/auth/client";
 
 const navItems = [
-  { key: "dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { key: "services", href: "/services", icon: Scissors },
-  { key: "specialists", href: "/specialists", icon: Users },
-  { key: "cabinets", href: "/cabinets", icon: DoorOpen },
-  { key: "clients", href: "/clients", icon: UserCircle },
-  { key: "appointments", href: "/appointments", icon: CalendarDays },
-  { key: "materials", href: "/materials", icon: Package },
+  { key: "dashboard", href: "/dashboard", icon: LayoutDashboard, adminOnly: false },
+  { key: "services", href: "/services", icon: Scissors, adminOnly: false },
+  { key: "specialists", href: "/specialists", icon: Users, adminOnly: false },
+  { key: "cabinets", href: "/cabinets", icon: DoorOpen, adminOnly: false },
+  { key: "clients", href: "/clients", icon: UserCircle, adminOnly: true },
+  { key: "appointments", href: "/appointments", icon: CalendarDays, adminOnly: false },
+  { key: "materials", href: "/materials", icon: Package, adminOnly: true },
 ] as const;
 
 export function Sidebar() {
@@ -37,6 +38,9 @@ export function Sidebar() {
   const { theme, setTheme } = useTheme();
   const params = useParams();
   const locale = params.locale as string;
+  const { data: session } = useSession();
+  const role = session?.user?.role ?? "user";
+  const visibleItems = navItems.filter((item) => !item.adminOnly || role === "admin");
 
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r bg-sidebar text-sidebar-foreground">
@@ -53,7 +57,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-1 p-4">
-        {navItems.map((item) => {
+        {visibleItems.map((item) => {
           const isActive = pathname.startsWith(item.href);
           return (
             <Link key={item.key} href={item.href}>

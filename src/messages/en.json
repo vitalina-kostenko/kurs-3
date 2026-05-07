@@ -56,7 +56,10 @@
     "activeSpecialists": "Active Specialists",
     "revenue": "Monthly Revenue",
     "recentAppointments": "Recent Appointments",
-    "upcomingAppointments": "Upcoming Appointments"
+    "upcomingAppointments": "Upcoming Appointments",
+    "myAppointmentsCount": "My Appointments",
+    "nextReminder": "Next Reminder",
+    "noUpcomingReminder": "No upcoming appointments yet"
   },
   "services": {
     "title": "Services",

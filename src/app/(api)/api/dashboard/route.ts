@@ -1,16 +1,68 @@
 import { db } from "@/pkg/db";
 import { clients, appointments, specialists, services } from "@/pkg/db/schema";
-import { eq, sql, count } from "drizzle-orm";
+import { and, eq, gte, inArray, sql, count } from "drizzle-orm";
 import { jsonOk, jsonError } from "@/app/shared/lib/api-helpers";
 import { requireAuth } from "@/app/shared/lib/auth-guard";
 
 export async function GET() {
-  const { error } = await requireAuth();
+  const { session, error } = await requireAuth();
  
   if (error) return error;
  
   try {
     const today = new Date().toISOString().split("T")[0];
+    const isAdmin = session.user.role === "admin";
+
+    if (!isAdmin) {
+      const userClients = await db
+        .select({ id: clients.id })
+        .from(clients)
+        .where(eq(clients.email, session.user.email));
+
+      const clientIds = userClients.map((client) => client.id);
+
+      if (clientIds.length === 0) {
+        return jsonOk({
+          role: "user",
+          userAppointmentsCount: 0,
+          nextAppointment: null,
+        });
+      }
+
+      const [userAppointmentsCount] = await db
+        .select({ value: count() })
+        .from(appointments)
+        .where(inArray(appointments.clientId, clientIds));
+
+      const [nextAppointment] = await db
+        .select({
+          id: appointments.id,
+          appointmentDate: appointments.appointmentDate,
+          startTime: appointments.startTime,
+          status: appointments.status,
+          serviceName: services.name,
+          specialistFirstName: specialists.firstName,
+          specialistLastName: specialists.lastName,
+        })
+        .from(appointments)
+        .leftJoin(services, eq(appointments.serviceId, services.id))
+        .leftJoin(specialists, eq(appointments.specialistId, specialists.id))
+        .where(
+          and(
+            inArray(appointments.clientId, clientIds),
+            gte(appointments.appointmentDate, today),
+            eq(appointments.status, "scheduled"),
+          ),
+        )
+        .orderBy(appointments.appointmentDate, appointments.startTime)
+        .limit(1);
+
+      return jsonOk({
+        role: "user",
+        userAppointmentsCount: userAppointmentsCount.value,
+        nextAppointment: nextAppointment ?? null,
+      });
+    }
 
     const [totalClients] = await db.select({ value: count() }).from(clients);
    
@@ -54,6 +106,7 @@ export async function GET() {
       .limit(10);
 
     return jsonOk({
+      role: "admin",
       totalClients: totalClients.value,
       activeSpecialists: activeSpecialists.value,
       todayAppointments: todayAppointments.value,

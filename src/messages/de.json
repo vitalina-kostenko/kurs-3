@@ -56,7 +56,10 @@
     "activeSpecialists": "Aktive Spezialisten",
     "revenue": "Monatlicher Umsatz",
     "recentAppointments": "Letzte Termine",
-    "upcomingAppointments": "Kommende Termine"
+    "upcomingAppointments": "Kommende Termine",
+    "myAppointmentsCount": "Meine Termine",
+    "nextReminder": "Nächste Erinnerung",
+    "noUpcomingReminder": "Noch keine kommenden Termine"
   },
   "services": {
     "title": "Dienstleistungen",

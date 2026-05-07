@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { create } from "zustand";
+import { queryClient } from "@/pkg/query/provider";
 
 interface SessionUser {
   id: string;
@@ -9,26 +11,41 @@ interface SessionUser {
   role: string;
 }
 
-interface SessionData {
-  user: SessionUser;
-  session: { token: string };
+interface SessionStore {
+  user: SessionUser | null;
+  token: string | null;
+  initialized: boolean;
+  setSession: (user: SessionUser, token: string) => void;
+  clearSession: () => void;
+  setInitialized: () => void;
 }
 
+const useSessionStore = create<SessionStore>((set) => ({
+  user: null,
+  token: null,
+  initialized: false,
+  setSession: (user, token) => set({ user, token, initialized: true }),
+  clearSession: () => set({ user: null, token: null, initialized: true }),
+  setInitialized: () => set({ initialized: true }),
+}));
+
 export function useSession() {
-  const [data, setData] = useState<SessionData | null>(null);
-  const [isPending, setIsPending] = useState(true);
+  const { user, token, initialized, setSession, clearSession, setInitialized } = useSessionStore();
 
   useEffect(() => {
+    if (initialized) return;
     fetch("/api/auth/session")
       .then((r) => r.json())
       .then((res) => {
-        setData(res.user ? res : null);
+        if (res.user) setSession(res.user, res.session.token);
+        else clearSession();
       })
-      .catch(() => setData(null))
-      .finally(() => setIsPending(false));
-  }, []);
+      .catch(() => { clearSession(); setInitialized(); });
+  }, [initialized, setSession, clearSession, setInitialized]);
 
-  return { data, isPending };
+  if (!initialized) return { data: null, isPending: true };
+  if (!user) return { data: null, isPending: false };
+  return { data: { user, session: { token } }, isPending: false };
 }
 
 export async function signIn(email: string, password: string) {
@@ -39,6 +56,8 @@ export async function signIn(email: string, password: string) {
   });
   const body = await res.json();
   if (!res.ok) return { error: body };
+  queryClient.clear();
+  useSessionStore.getState().setSession(body.user, body.token);
   return { data: body, error: null };
 }
 
@@ -55,4 +74,6 @@ export async function signUp(name: string, email: string, password: string) {
 
 export async function signOut() {
   await fetch("/api/auth/sign-out", { method: "POST" });
+  queryClient.clear();
+  useSessionStore.getState().clearSession();
 }

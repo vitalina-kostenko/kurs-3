@@ -1,12 +1,12 @@
 import { jsonError, jsonOk } from "@/app/shared/lib/api-helpers";
-import { requireAuth, requireRole } from "@/app/shared/lib/auth-guard";
+import { requireRole } from "@/app/shared/lib/auth-guard";
 import { db } from "@/pkg/db";
 import { materials } from "@/pkg/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest } from "next/server";
 
 export async function GET() {
-  const { error } = await requireAuth();
+  const { error } = await requireRole("admin");
  
   if (error) return error;
  
